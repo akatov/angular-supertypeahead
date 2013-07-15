@@ -5,7 +5,7 @@ angular.module('supertypeahead',
         // override typeahead's Highlight filter
         return function (matchItem, query) {
             return matchItem }})
-    .directive('supersearch', function() {
+    .directive('supertypeahead', function() {
         return {
             restrict: 'E',
             scope: {
