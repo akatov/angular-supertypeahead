@@ -19,18 +19,19 @@ angular.module('template/supertypeahead/supertypeahead.html', [])
         $templateCache
             .put('template/supertypeahead/supertypeahead.html',
                  '<span'
-                 + ' onclick="$(this).find(\'[contenteditable]\').focus()"'
+                 + ' onclick="angular.element(this).find(\'[contenteditable]\').focus()"'
                  + ' style="border: 2px inset; display: inline-block;'
-                 + ' cursor: text; padding: 2px 2px"'
-                 + '>'
+                 + ' cursor: text; padding: 1px 1px"'
+                 + '><span'
                  // make sure this box doesn't disappear
-                 + '<span>&nbsp;</span>'
+                 // + '<span>&nbsp;</span>'
                  // the main "input" box
-                 + '<span'
-                 + ' style="outline-style: none"'
+                 + ' style="outline-style: none; display: inline-block; min-width: 10px"'
                  + ' ng-model="model"'
                  // contenteditable has to come AFTER typeahead
                  + ' typeahead="sugg for sugg in suggest($viewValue)"'
                  + ' contenteditable="true"'
+                 + ' strip-br="true"'
+                 + ' select-non-editable="true"'
                  + '></span>'
                  + '</span>')}])

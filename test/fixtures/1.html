@@ -16,7 +16,8 @@ angular.module('ngapp', ['supertypeahead'])
   }
   $scope.$watch('model', function(m) {
     console.log("model changed to:", m);
-  }, true);
+  }, true)
+  window.scope = $scope
 })
 angular.bootstrap(document, ['ngapp'])
   </script>
@@ -26,7 +27,7 @@ angular.bootstrap(document, ['ngapp'])
   <supertypeahead id="mysearch"
                   data-model="model"
                   data-suggest="suggest"
-                  style="width: 500px; background-color: yellow"
+                  style="width: 300px; background-color: yellow"
                   >
   </supertypeahead>
   <br>

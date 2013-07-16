@@ -1,6 +1,6 @@
 {
   "name": "angular-supertypeahead",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "main": "angular-supertypeahead.js",
   "ignore": [
     "**/.*",
@@ -10,7 +10,7 @@
   "dependencies": {
     "angular-unstable": "~1.1.5",
     "angular-bootstrap": "~0.3.0",
-    "angular-contenteditable": "~0.1.0"
+    "angular-contenteditable": "~0.2.0"
   },
   "devDependencies": {
     "bootstrap-css": "~2.3.2",
