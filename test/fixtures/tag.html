@@ -21,18 +21,23 @@ angular.module('ngapp', ['supertypeahead'])
 })
 angular.bootstrap(document, ['ngapp'])
   </script>
+  <style>
+    supertypeahead {
+      width: 500px;
+      display: block;
+      border: 2px inset grey;
+    }
+  </style>
 </head>
-<body data-ng-controller="Ctrl" class='container-fluid'>
+<body data-ng-controller="Ctrl" class="container-fluid">
+  <h1>3.html</h1>
   Hello. here comes the searches:
-  <supertypeahead id="mysearch"
-                  data-model="model"
-                  data-suggest="suggest"
-                  style="width: 300px; background-color: yellow"
-                  >
+  <supertypeahead 
+      id="mysearch"
+      data-model="model"
+      data-suggest="suggest">
   </supertypeahead>
-  <br>
-  And this is the model:
-  <pre>{{ model }}</pre>
+  <pre>{{model}}</pre>
 </body>
 </html>
 
