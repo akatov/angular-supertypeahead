@@ -4,17 +4,26 @@ angular.module('supertypeahead',
     .filter('typeaheadHighlight', function() {
         // override typeahead's Highlight filter
         return function (matchItem, query) {
-            return matchItem }})
+            return matchItem
+        }
+    })
     .directive('supertypeahead', function() {
         return {
             restrict: 'EA',
             scope: {
                 model: '=model',
-                suggest: '=suggest' },
+                suggest: '=suggest'
+            },
             templateUrl: 'template/supertypeahead/supertypeahead.html',
             replace: false,
             link: function(scope, element, attrs) {
-                element.css('cursor', 'text') }}})
+                element.css('cursor', 'text')
+                element.click(function(e){
+                    $(this).find('[contenteditable]').focus()
+                })
+            }
+        }
+    })
 
 angular.module('template/supertypeahead/supertypeahead.html', [])
     .run(['$templateCache', function($templateCache){
@@ -29,4 +38,5 @@ angular.module('template/supertypeahead/supertypeahead.html', [])
                  + ' contenteditable="true"'
                  + ' strip-br="true"'
                  + ' select-non-editable="true"'
-                 + '></span>' )}])
+                 + '></span>' )
+    }])
