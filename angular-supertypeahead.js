@@ -37,6 +37,7 @@ angular.module('template/supertypeahead/supertypeahead.html', [])
                  + ' typeahead="sugg for sugg in suggest($viewValue)"'
                  + ' contenteditable="true"'
                  + ' strip-br="true"'
+                 + ' no-line-breaks="true"'
                  + ' select-non-editable="true"'
                  + '></span>' )
     }])
