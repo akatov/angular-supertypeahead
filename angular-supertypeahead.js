@@ -81,7 +81,7 @@ angular.module('supertypeahead',
                 if(prefWords) {
                   var pref = prefWords.join(' ');
                   $scope.trimmedSuggestions = _(sugs).map(function(sug) {
-                    return sug.substring(pref.length);
+                    return sug.substring(pref.length); //+ endElem;
                   }).compact().value();
                 }
                 // measure common prefix
@@ -95,7 +95,14 @@ angular.module('template/supertypeahead/supertypeahead.html', [])
     .run(['$templateCache', function($templateCache){
         $templateCache
             .put('template/supertypeahead/supertypeahead.html',
-                 '<span'
+                 '<style>'
+                 + '.typeahead.dropdown-menu {'
+                 + '  transition: none !important;'
+                 + '  -webkit-transition: none !important;'
+                 + '}'
+                 + '</style>'
+
+                 + '<span'
                  + ' style="display: inline-block; min-width: 10px"'
                  + ' onfocus="this.style.outline=\'none\'"'
                  + ' ng-model="model"'
