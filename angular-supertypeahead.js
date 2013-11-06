@@ -47,41 +47,40 @@ angular.module('supertypeahead',
                 var isPrefix = function(str, pref) {
                   return str.indexOf(pref, 0) === 0;
                 };
-                var map2 = function(arrarr, f) {
-                  return _.map(arrarr, function(arr) {
-                    return _.map(arr, f);
-                  });
-                };
-                var shiftDropdown = function() {
+
+                var shiftDropdownByAddingElem = function() {
+                  // TODO make these relative to the current directive so 
+                  // there can be multiple graph search boxes
+                  $(".supertypeaheadTextbox").append("<span id='graphSearchQueryEnd'></span>");
                   var sqep = $('#graphSearchQueryEnd').offset();
                   var tdmp = $('.typeahead.dropdown-menu').offset();
                   if(sqep && tdmp) {
                     $('.typeahead.dropdown-menu').offset({top: tdmp.top, left: sqep.left});
+                  } else {
+                    console.error("Supertypeahead: not all elements initialized");
                   }
+                  $('#graphSearchQueryEnd').remove();
                 };
-                setTimeout(shiftDropdown, 0);
+                setTimeout(shiftDropdownByAddingElem, 0);
+                //shiftDropdownByAddingElem();
+
                 //if(_.contains($scope.trimmedSuggestions, txt)) {
-                var endElem = "<span id=\"graphSearchQueryEnd\"></span>";
-                if(isSuffix(oldTxt, endElem) && isPrefix(oldTxt, txt) && oldTxt.length === txt.length + endElem.length) return;
                 var choice = _.find($scope.suggestions, function(sug) {
                   return isSuffix(sug, txt); 
                 });
-                if(choice !== undefined) {
-                  if(_.isEqual($scope.model, choice)) {
-                    $scope.model += endElem;
-                  } else if(!isPrefix(txt, oldTxt)) {
-                    $scope.model = choice + endElem;
+                if(choice !== undefined && txt.length > 0) {
+                  if(!isPrefix(txt, oldTxt)) {
+                    $scope.model = choice;
                   }
                 }
-                var unSuffTxt = unSuffix(txt, endElem);
-                var sugs = $scope.suggestions = $scope.suggest(unSuffTxt);
-                var prefWords = commonPref(_.map(sugs.concat([unSuffTxt.replace('&nbsp;', ' ')]), function(str) {
+                var sugs = $scope.suggestions = $scope.suggest(txt);
+                var prefWords = commonPref(_.map(sugs.concat([txt.replace('&nbsp;', ' ')]), function(str) {
                   return str.split(' ');
                 }));
                 if(prefWords) {
                   var pref = prefWords.join(' ');
                   $scope.trimmedSuggestions = _(sugs).map(function(sug) {
-                    return sug.substring(pref.length); //+ endElem;
+                    return sug.substring(pref.length);
                   }).compact().value();
                 }
                 // measure common prefix
@@ -102,7 +101,7 @@ angular.module('template/supertypeahead/supertypeahead.html', [])
                  + '}'
                  + '</style>'
 
-                 + '<span'
+                 + '<span class="supertypeaheadTextbox"'
                  + ' style="display: inline-block; min-width: 10px"'
                  + ' onfocus="this.style.outline=\'none\'"'
                  + ' ng-model="model"'
