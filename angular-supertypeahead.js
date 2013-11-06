@@ -51,15 +51,15 @@ angular.module('supertypeahead',
                 var shiftDropdownByAddingElem = function() {
                   // TODO make these relative to the current directive so 
                   // there can be multiple graph search boxes
-                  $(".supertypeaheadTextbox").append("<span id='graphSearchQueryEnd'></span>");
-                  var sqep = $('#graphSearchQueryEnd').offset();
+                  $(".supertypeaheadTextbox").append("<span id='supertypeaheadEnd'></span>");
+                  var sqep = $('#supertypeaheadEnd').offset();
                   var tdmp = $('.typeahead.dropdown-menu').offset();
                   if(sqep && tdmp) {
                     $('.typeahead.dropdown-menu').offset({top: tdmp.top, left: sqep.left});
                   } else {
                     console.error("Supertypeahead: not all elements initialized");
                   }
-                  $('#graphSearchQueryEnd').remove();
+                  $('#supertypeaheadEnd').remove();
                 };
                 setTimeout(shiftDropdownByAddingElem, 0);
                 //shiftDropdownByAddingElem();
