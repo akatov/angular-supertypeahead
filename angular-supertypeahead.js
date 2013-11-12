@@ -25,7 +25,9 @@ angular.module('supertypeahead',
             controller: ['$scope', function($scope) {
               // when text changes, get suggestions,
               // remove the common prefix and shift the dropdown over
-              $scope.$watch('model', function(txt, oldTxt) {
+              // TODO: watch suggest too
+              var updateTrimmedSuggestions = function(txt, oldTxt) {
+                txt = $scope.model;
                 var commonPrefBinaryOp = function(arr1, arr2) {
                   return _.take(arr1, function(e, i) {
                     return _.isEqual(e, arr2[i]);
@@ -64,16 +66,16 @@ angular.module('supertypeahead',
                 setTimeout(shiftDropdownByAddingElem, 0);
                 //shiftDropdownByAddingElem();
 
-                //if(_.contains($scope.trimmedSuggestions, txt)) {
+                //if(_.contains($scope.trimmedSuggestions, txt)) 
                 var choice = _.find($scope.suggestions, function(sug) {
                   return isSuffix(sug, txt); 
                 });
                 if(choice !== undefined && txt.length > 0) {
-                  if(!isPrefix(txt, oldTxt)) {
+                  if(oldTxt && !isPrefix(txt, oldTxt)) {
                     $scope.model = choice;
                   }
                 }
-                var sugs = $scope.suggestions = $scope.suggest(txt);
+                var sugs = $scope.suggestions = $scope.suggest;//(txt);
                 var prefWords = commonPref(_.map(sugs.concat([txt.replace('&nbsp;', ' ')]), function(str) {
                   return str.split(' ');
                 }));
@@ -85,7 +87,9 @@ angular.module('supertypeahead',
                 }
                 // measure common prefix
                 // shift dropdown
-              });
+              };
+              $scope.$watch('suggest', updateTrimmedSuggestions);
+              $scope.$watch('model', updateTrimmedSuggestions);
             }]
         };
     });
