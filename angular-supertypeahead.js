@@ -112,6 +112,7 @@ angular.module('template/supertypeahead/supertypeahead.html', [])
                  // contenteditable has to come AFTER typeahead
                  //+ ' typeahead="sugg for sugg in suggest($viewValue)"'
                  + ' typeahead="sugg for sugg in trimmedSuggestions"'
+                 + ' typeahead-loading="true"'
                  + ' contenteditable="true"'
                  + ' strip-br="true"'
                  + ' no-line-breaks="true"'
