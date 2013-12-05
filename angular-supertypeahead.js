@@ -69,11 +69,11 @@ angular.module('supertypeahead',
                 //if(_.contains($scope.trimmedSuggestions, txt))
                 var choice = _.find($scope.suggestions, function(sug) {
                   //return isSuffix(sug.trim(), txt.trim());
-                  return sug.indexOf(txt.trim()) > 0;
+                  return sug.lastIndexOf(txt.trim()) > 0;
                 });
                 if(choice !== undefined && txt.length > 0) {
                   if(oldTxt && !isPrefix(txt, oldTxt)) {
-                    choice = choice.substring(0, choice.indexOf(txt.trim()) + txt.trim().length);
+                    choice = choice.substring(0, choice.lastIndexOf(txt.trim()) + txt.trim().length);
                     $scope.model = choice;
                   }
                 }
