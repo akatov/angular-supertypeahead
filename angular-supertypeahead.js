@@ -51,7 +51,7 @@ angular.module('supertypeahead',
                 };
 
                 var shiftDropdownByAddingElem = function() {
-                  // TODO make these relative to the current directive so 
+                  // TODO make these relative to the current directive so
                   // there can be multiple graph search boxes
                   $(".supertypeaheadTextbox").append("<span id='supertypeaheadEnd'></span>");
                   var sqep = $('#supertypeaheadEnd').offset();
@@ -66,12 +66,14 @@ angular.module('supertypeahead',
                 setTimeout(shiftDropdownByAddingElem, 0);
                 //shiftDropdownByAddingElem();
 
-                //if(_.contains($scope.trimmedSuggestions, txt)) 
+                //if(_.contains($scope.trimmedSuggestions, txt))
                 var choice = _.find($scope.suggestions, function(sug) {
-                  return isSuffix(sug, txt); 
+                  //return isSuffix(sug.trim(), txt.trim());
+                  return sug.indexOf(txt.trim()) > 0;
                 });
                 if(choice !== undefined && txt.length > 0) {
                   if(oldTxt && !isPrefix(txt, oldTxt)) {
+                    choice = choice.substring(0, choice.indexOf(txt.trim()) + txt.trim().length);
                     $scope.model = choice;
                   }
                 }
