@@ -28,6 +28,10 @@ angular.module('supertypeahead',
               // TODO: watch suggest too
               var updateTrimmedSuggestions = function(txt, oldTxt) {
                 txt = $scope.model;
+                if(txt === undefined) {
+                  $scope.model = "";
+                  return;
+                }
                 var commonPrefBinaryOp = function(arr1, arr2) {
                   return _.take(arr1, function(e, i) {
                     return _.isEqual(e, arr2[i]);
