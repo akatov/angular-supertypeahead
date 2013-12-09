@@ -70,11 +70,13 @@ angular.module('supertypeahead',
                 setTimeout(shiftDropdownByAddingElem, 0);
                 //shiftDropdownByAddingElem();
 
-                //if(_.contains($scope.trimmedSuggestions, txt))
-                var choice = _.find($scope.suggestions, function(sug) {
+                // find the one where txt is closest to the end
+                var choice = _($scope.suggestions).filter(function(sug) {
                   //return isSuffix(sug.trim(), txt.trim());
                   return sug.lastIndexOf(txt.trim()) > 0;
-                });
+                }).sortBy(function(sug) {
+                  return -sug.lastIndexOf(txt.trim());
+                }).value()[0];
                 if(choice !== undefined && txt.length > 0) {
                   if(oldTxt && !isPrefix(txt, oldTxt)) {
                     choice = choice.substring(0, choice.lastIndexOf(txt.trim()) + txt.trim().length);
