@@ -11,7 +11,7 @@ angular.module('supertypeahead',
         return {
             restrict: 'EA',
             scope: {
-                model: '=model',
+                finalModel: '=model',
                 suggest: '=suggest'
             },
             templateUrl: 'template/supertypeahead/supertypeahead.html',
@@ -23,13 +23,14 @@ angular.module('supertypeahead',
                 })
             },
             controller: ['$scope', function($scope) {
+              $scope.model = "";
               // when text changes, get suggestions,
               // remove the common prefix and shift the dropdown over
               // TODO: watch suggest too
               var updateTrimmedSuggestions = function(txt, oldTxt) {
                 txt = $scope.model;
                 if(txt === undefined) {
-                  $scope.model = "";
+                  $scope.finalrModel = $scope.model = "";
                   return;
                 }
                 var commonPrefBinaryOp = function(arr1, arr2) {
@@ -70,6 +71,7 @@ angular.module('supertypeahead',
                 setTimeout(shiftDropdownByAddingElem, 0);
                 //shiftDropdownByAddingElem();
 
+                var finalModelSet = false;
                 // find the one where txt is closest to the end
                 var choice = _($scope.suggestions).filter(function(sug) {
                   //return isSuffix(sug.trim(), txt.trim());
@@ -80,7 +82,8 @@ angular.module('supertypeahead',
                 if(choice !== undefined && txt.length > 0) {
                   if(oldTxt && !isPrefix(txt, oldTxt)) {
                     choice = choice.substring(0, choice.lastIndexOf(txt.trim()) + txt.trim().length);
-                    $scope.model = choice;
+                    $scope.finalModel = $scope.model = choice;
+                    finalModelSet = true;
                   }
                 }
                 var sugs = $scope.suggestions = $scope.suggest;//(txt);
@@ -93,8 +96,10 @@ angular.module('supertypeahead',
                     return sug.substring(pref.length);
                   }).compact().value();
                 }
-                // measure common prefix
-                // shift dropdown
+
+                if(!finalModelSet) {
+                  $scope.finalModel = $scope.model;
+                }
               };
               $scope.$watch('suggest', updateTrimmedSuggestions);
               $scope.$watch('model', updateTrimmedSuggestions);
